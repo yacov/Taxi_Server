@@ -1,21 +1,29 @@
 Taxi::Application.routes.draw do
   scope '/users', controller: 'users' do
-    get 'share/:ref' => :share
-    get 'register'   => :register
+    get 'share/:ref' => :share          #reqvest example: localhost:3000/users/share/d6450d9f689653d6548ea7b51103073e
+    get 'register'   => :register       #reqvest example: localhost:3000/users/register?device_id=4&email=Ua2@gmail.com&phone=3232323232323
   end
 
   scope '/drivers', controller: 'drivers' do
-    get 'share' => :share
-    get 'register'   => :register
+    get 'share'      => :share          #reqvest example: localhost:3000/drivers/share/d6450d9f689653d6548ea7b51103073e
+    get 'register'   => :register       #reqvest example: localhost:3000/drivers/register?device_id=3&phone=22222222222&email=Da1@gmail.com&name=DIK&car_id=AB1478521&brand=volkswagen
   end
 
   resources :users, :only => [] do
-    #get 'order'    => :order      #order taxi
-    #get 'order', on: :member
-    get 'order', on: :collection
-    get 'status'   => :status     #status order
-    get 'cancel'   => :cancel     #cancel from order
+    get 'point'    => :point      #check points when the application  reqvest example: localhost:3000/users/<id>2/point
+    get 'order'    => :order      #order taxi                         reqvest example: localhost:3000/users/<id>4/order?address=moscva,mogevelovay5/4&gps_lat_user=345.321&gps_long_user=254.547
+    get 'status'   => :status     #status order                       reqvest example: localhost:3000/users/<id>1/status?order_id=1
+    get 'cancel'   => :cancel     #cansel from order                  reqvest example: localhost:3000/users/<id>4/cancel?order_id=4
     get 'reserved' => :reserved   #reserved order
+  end
+
+  resources :drivers, :only => [] do
+    #reqvest list of orders
+    get 'point'    => :point      #check points when the application  reqvest example: localhost:3000/drivers/2/point
+    get 'order'    => :order      #order list users
+    get 'accept'   => :accept     #option of ordering                 reqvest exemple:localhost:3000/drivers/<id>2/accept?order_id=1&gps_long_drivers=245.325&gps_lat_drivers=145.214
+    get 'cancel'   => :cancel     #cansel from order                  reqvest example: localhost:3000/drivers/<id>1/cancel?order_id=1
+    get 'delivered' => :delivered   #
   end
 
 

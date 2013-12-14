@@ -14,31 +14,36 @@
 ActiveRecord::Schema.define(:version => 20131011180101) do
 
   create_table "drivers", :id => false, :force => true do |t|
-    t.integer  "user_id",    :null => false
+    t.integer  "user_id",                   :null => false
     t.string   "name"
+    t.string   "car_id"
+    t.string   "brand"
     t.integer  "points",     :default => 0, :null => false
-    t.string   "email"
-    t.string   "car"          # car model
-    t.string   "plate"        # car plate
-    t.string   "phone"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   add_index "drivers", ["user_id"], :name => "index_drivers_on_user_id", :unique => true
 
-  create_table "order", :force => true do |t|
-    t.integer "order_id",        :null => false
-    t.string  "name_user"
+  create_table "orders", :force => true do |t|
+    t.integer "user_id"
     t.string  "address"
-    t.integer "gps_long"
-    t.integer "gps_lst"
-    t.integer "user_id_drivers"
-    t.boolean "orders"
+    t.float   "gps_long_user"
+    t.float   "gps_lat_user"
+    t.integer "driver_id"
+    t.float   "gps_long_drivers"
+    t.float   "gps_lat_drivers"
+    t.string  "good_luck"
+    t.string  "cancellations"
+    t.boolean "order_accept"
   end
+
+  add_index "orders", ["driver_id"], :name => "index_orders_on_driver_id"
+  add_index "orders", ["user_id"], :name => "index_orders_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "device_id",                 :null => false
+    t.string   "phone"
     t.string   "email"
     t.integer  "points",     :default => 0, :null => false
     t.string   "ref"

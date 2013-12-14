@@ -48,14 +48,11 @@ class UsersController < ApplicationController
     o=Order.find(params[:order_id])
     d=o.driver
     return render json: {errors: "Order this id is not accepted"} if !d
-    return render json: {name: d.name, gps_long_drivers: o.gps_long_drivers, gps_lat_drivers: o.gps_lat_drivers,cancellations: o.cancellations}
-
-    #return render json: {errors: "RRRRRRRRRRRRRRRRRR" }
-    end
+    return render json: {name: d.name, gps_long_drivers: o.gps_long_drivers, gps_lat_drivers: o.gps_lat_drivers,cancellations: o.cancellations}    end
   def cancel
     u=User.find(params[:user_id])
     o=Order.find(params[:order_id])
-    if u.id ==o.user_id
+    if u.id == o.user_id
       o.destroy
       return render json: {text: "the order destroy"} if order=u.order
     end
